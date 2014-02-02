@@ -1,0 +1,34 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>QUnit Test Suite</title>  
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.13.0.css" type="text/css" media="screen">
+    <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.13.0.js"></script>
+    <!-- Your project file goes here -->  
+    <!-- <script type="text/javascript" src="myProject.js"></script>   -->
+    <!-- Your tests file goes here -->  
+    <!-- <script type="text/javascript" src="myTests.js"></script>   -->
+</head>  
+<body>  
+    <h1 id="qunit-header">QUnit Test Suite</h1>  
+    <h2 id="qunit-banner"></h2>  
+    <div id="qunit-testrunner-toolbar"></div>  
+    <h2 id="qunit-userAgent"></h2>  
+    <ol id="qunit-tests"></ol>  
+
+    <script>
+      // Let's test this function  
+      function isEven(val) {  
+        return val % 2 === 0;  
+      }  
+
+      test('isEven()', function() { 
+        ok(isEven(0), 'Zero is an even number'); 
+        ok(isEven(2), 'So is two'); 
+        ok(isEven(-4), 'So is negative four'); 
+        ok(!isEven(1), 'One is not an even number'); 
+        ok(!isEven(-7), 'Neither is negative seven');  
+      })  
+    </script>
+</body>  
+</html>  

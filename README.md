@@ -1,0 +1,1 @@
+Run QUnit unit tests in a PhantomJS-powered headless test runner, providing basic console output for QUnit tests. Uses the [phantomjs](https://github.com/Obvious/phantomjs) node module and the [PhantomJS Runner](https://github.com/jquery/qunit/tree/master/addons/phantomjs) QUnit Plugin.
