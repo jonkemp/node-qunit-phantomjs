@@ -1,6 +1,6 @@
 {
   "name": "node-qunit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "dependencies": {
     "phantomjs": "~1.9.2-6"
