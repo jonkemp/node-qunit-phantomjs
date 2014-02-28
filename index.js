@@ -1,12 +1,18 @@
 var path = require('path');
 var childProcess = require('child_process');
+var argv = require('minimist')(process.argv.slice(2));
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
-var args = process.argv.slice(2);
+if (!argv.reporter || argv.reporter === 'min') {
+	runner = 'runner.js';
+} else if (argv.reporter === 'list') {
+	runner = 'runner-list.js';
+}
+
 var childArgs = [
-    path.join(__dirname, 'runner.js'),
-    args[0]
+    path.join(__dirname, runner),
+    argv._[0]
 ];
 
 childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
