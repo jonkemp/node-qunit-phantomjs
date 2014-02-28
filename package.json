@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "dependencies": {
-    "phantomjs": "~1.9.2-6"
+    "phantomjs": "^1.9.2-6",
+    "minimist": "^0.0.8"
   }
 }
