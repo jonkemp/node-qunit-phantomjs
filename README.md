@@ -9,7 +9,7 @@ If you're using [gulp](https://github.com/gulpjs/gulp), you should take a look a
 
 ## Install
 
-Install with [npm](https://npmjs.org/package/gulp-inline-css)
+Install with [npm](https://npmjs.org/package/node-qunit-phantomjs)
 
 ```bash
 $ npm install --save-dev node-qunit-phantomjs
