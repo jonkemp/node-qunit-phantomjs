@@ -6,6 +6,15 @@ Run QUnit unit tests in a PhantomJS-powered headless test runner, providing basi
 
 If you're using [gulp](https://github.com/gulpjs/gulp), you should take a look at the [gulp-qunit](https://github.com/jonkemp/gulp-qunit) plugin.
 
+
+## Install
+
+Install with [npm](https://npmjs.org/package/gulp-inline-css)
+
+```bash
+$ npm install --save-dev node-qunit-phantomjs
+```
+
 ## Usage
 
 ```js
