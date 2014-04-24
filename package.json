@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "Run QUnit unit tests in a headless PhantomJS instance without using Grunt.",
   "dependencies": {
-    "phantomjs": "^1.9.2-6",
-    "minimist": "^0.0.8"
+    "phantomjs": "^1.9.2-6"
   },
   "main": "index.js",
   "scripts": {
