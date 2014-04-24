@@ -1,4 +1,6 @@
-# node-qunit-phantomjs
+# node-qunit-phantomjs [![Build Status](https://travis-ci.org/jonkemp/node-qunit-phantomjs.png?branch=master)](https://travis-ci.org/jonkemp/node-qunit-phantomjs)
+
+> Run QUnit unit tests in a headless PhantomJS instance without using Grunt.
 
 Run QUnit unit tests in a PhantomJS-powered headless test runner, providing basic console output for QUnit tests. Uses the [phantomjs](https://github.com/Obvious/phantomjs) node module and the [PhantomJS Runner QUnit Plugin](https://github.com/jonkemp/qunit-phantomjs-runner).
 
@@ -6,15 +8,41 @@ If you're using [gulp](https://github.com/gulpjs/gulp), you should take a look a
 
 ## Usage
 
-```bash
-$ node index.js http://localhost/qunit/test/index.html
+```js
+var qunit = require('node-qunit-phantomjs');
+
+qunit('./test/fixture.html');
 ```
 
-List reporter to output list as test cases pass or fail:
+Verbose option to output list as test cases pass or fail:
+```js
+var qunit = require('node-qunit-phantomjs');
 
-```bash
-$ node index.js http://localhost/qunit/test/index.html --reporter=list
+qunit('./test/fixture.html', { 'verbose': true });
 ```
+
+Sample [gulp](https://github.com/gulpjs/gulp) task:
+```js
+var gulp = require('gulp'),
+    qunit = require('node-qunit-phantomjs');
+
+gulp.task('qunit', function() {
+    qunit('./test/fixture.html');
+});
+```
+
+## API
+
+### qunit(path-to-test-runner[, options]);
+
+Opens a test runner file in PhantomJS and logs test results to the console.
+
+#### options.verbose
+
+Type: `Boolean`
+Default: `none`
+
+Add list as test cases pass or fail to output.
 
 ## License
 
