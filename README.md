@@ -11,12 +11,28 @@ If you're using [gulp](https://github.com/gulpjs/gulp), you should take a look a
 
 Install with [npm](https://npmjs.org/package/node-qunit-phantomjs)
 
+globally:
+```bash
+$ npm install -g node-qunit-phantomjs
+```
+
+or locally:
 ```bash
 $ npm install --save-dev node-qunit-phantomjs
 ```
 
 ## Usage
 
+Via command line:
+```bash
+$ node-qunit-phantomjs ./test/fixture.html
+```
+With options:
+```bash
+$ node-qunit-phantomjs --verbose ./test/fixture.html
+```
+
+Or require it as a module:
 ```js
 var qunit = require('node-qunit-phantomjs');
 
