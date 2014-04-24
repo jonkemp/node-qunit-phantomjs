@@ -39,8 +39,8 @@ Opens a test runner file in PhantomJS and logs test results to the console.
 
 #### options.verbose
 
-Type: `Boolean`
-Default: `none`
+Type: `Boolean`  
+Default: `none`  
 
 Add list as test cases pass or fail to output.
 
