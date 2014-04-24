@@ -15,3 +15,7 @@ List reporter to output list as test cases pass or fail:
 ```bash
 $ node index.js http://localhost/qunit/test/index.html --reporter=list
 ```
+
+## License
+
+MIT © [Jonathan Kemp](http://jonkemp.com)

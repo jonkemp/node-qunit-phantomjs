@@ -1,13 +1,15 @@
+'use strict';
 var path = require('path');
 var childProcess = require('child_process');
 var argv = require('minimist')(process.argv.slice(2));
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
+var runner;
 
 if (!argv.reporter || argv.reporter === 'min') {
-	runner = 'runner.js';
+	runner = 'lib/runner.js';
 } else if (argv.reporter === 'list') {
-	runner = 'runner-list.js';
+	runner = 'lib/runner-list.js';
 }
 
 var childArgs = [
