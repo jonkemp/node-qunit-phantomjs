@@ -28,6 +28,7 @@
   "devDependencies": {
     "gulp-mocha": "^0.4.1",
     "gulp": "^3.6.1",
-    "gulp-jshint": "^1.5.4"
+    "gulp-jshint": "^1.5.4",
+    "mocha": "*"
   }
 }
