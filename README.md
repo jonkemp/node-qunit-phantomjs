@@ -29,7 +29,7 @@ $ node-qunit-phantomjs ./test/fixture.html
 ```
 With options:
 ```bash
-$ node-qunit-phantomjs --verbose ./test/fixture.html
+$ node-qunit-phantomjs ./test/fixture.html --verbose
 ```
 
 Or require it as a module:
