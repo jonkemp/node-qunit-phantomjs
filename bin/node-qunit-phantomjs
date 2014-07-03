@@ -11,4 +11,6 @@ if (argv.verbose) {
     options.verbose = true;
 }
 
-require(path.join(dir, 'index.js'))(argv._[0], options);
+require(path.join(dir, 'index.js'))(argv._[0], options, function (code) {
+    process.exit(code);
+});
