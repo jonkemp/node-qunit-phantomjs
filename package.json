@@ -1,9 +1,9 @@
 {
   "name": "node-qunit-phantomjs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Run QUnit unit tests in a headless PhantomJS instance without using Grunt.",
   "dependencies": {
-    "minimist": "^0.0.8",
+    "minimist": "^0.2.0",
     "phantomjs": "^1.9.2-6"
   },
   "main": "index.js",
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/jonkemp/node-qunit-phantomjs",
   "devDependencies": {
-    "gulp-mocha": "^0.4.1",
+    "gulp-mocha": "^0.5.1",
     "gulp": "^3.6.1",
     "gulp-jshint": "^1.5.4",
     "mocha": "*"
