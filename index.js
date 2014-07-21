@@ -4,8 +4,9 @@ var childProcess = require('child_process');
 var phantomjs = require('phantomjs');
 var binPath = phantomjs.path;
 
-module.exports = function (filepath, options) {
+module.exports = function (filepath, options, callback) {
     var opt = options || {};
+    var cb = callback || function () {};
     var runner = 'lib/runner.js';
     if (opt.verbose) {
         runner = 'lib/runner-list.js';
@@ -19,7 +20,7 @@ module.exports = function (filepath, options) {
         (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
     ];
 
-    return childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
+    var proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
         console.log('Testing ' + path.relative(__dirname, filepath));
 
         if (stdout) {
@@ -34,5 +35,9 @@ module.exports = function (filepath, options) {
         if (err) {
             console.log(err);
         }
+    });
+
+    proc.on('close', function (code) {
+        return cb(code);
     });
 };
