@@ -69,6 +69,13 @@ Default: `none`
 
 Add list as test cases pass or fail to output.
 
+#### options.phantomjs-options
+
+Type: `Array`  
+Default: `None`
+
+These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
+
 ## License
 
 MIT © [Jonathan Kemp](http://jonkemp.com)
