@@ -1,13 +1,15 @@
 'use strict';
-var path = require('path');
-var childProcess = require('child_process');
-var phantomjs = require('phantomjs');
-var binPath = phantomjs.path;
+
+var path = require('path'),
+    childProcess = require('child_process'),
+    phantomjs = require('phantomjs'),
+    binPath = phantomjs.path;
 
 module.exports = function (filepath, options, callback) {
-    var opt = options || {};
-    var cb = callback || function () {};
-    var runner = 'lib/runner.js';
+    var opt = options || {},
+        cb = callback || function () {},
+        runner = 'lib/runner.js';
+
     if (opt.verbose) {
         runner = 'lib/runner-list.js';
     }
