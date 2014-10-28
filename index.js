@@ -22,6 +22,10 @@ module.exports = function (filepath, options, callback) {
         (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
     ];
 
+    if (opt['phantomjs-options'] && opt['phantomjs-options'].length) {
+        childArgs.concat( opt['phantomjs-options'] );
+    }
+
     var proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
         console.log('Testing ' + path.relative(__dirname, filepath));
 
