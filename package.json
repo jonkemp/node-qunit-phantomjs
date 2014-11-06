@@ -30,7 +30,8 @@
     "gulp": "^3.8.9",
     "gulp-jshint": "^1.8.6",
     "gulp-mocha": "^1.1.1",
-    "mocha": "*"
+    "mocha": "*",
+    "qunitjs": "^1.15.0"
   },
   "bin": {
     "node-qunit-phantomjs": "./bin/node-qunit-phantomjs"
