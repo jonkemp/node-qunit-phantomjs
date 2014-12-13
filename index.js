@@ -8,17 +8,17 @@ var path = require('path'),
 module.exports = function (filepath, options, callback) {
     var opt = options || {},
         cb = callback || function () {},
-        runner = 'lib/runner.js';
+        runner = './node_modules/qunit-phantomjs-runner/runner.js';
 
     if (opt.verbose) {
-        runner = 'lib/runner-list.js';
+        runner = './node_modules/qunit-phantomjs-runner/runner-list.js';
     }
 
     var absolutePath = path.resolve(filepath),
         isAbsolutePath = absolutePath.indexOf(filepath) >= 0;
 
     var childArgs = [
-        path.join(__dirname, runner),
+        path.normalize(runner),
         (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
     ];
 
