@@ -15,16 +15,17 @@ module.exports = function (filepath, options, callback) {
     }
 
     var absolutePath = path.resolve(filepath),
-        isAbsolutePath = absolutePath.indexOf(filepath) >= 0;
-
-    var childArgs = [
-        path.normalize(runner),
-        (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
-    ];
+        isAbsolutePath = absolutePath.indexOf(filepath) >= 0,
+        childArgs = [];
 
     if (opt['phantomjs-options'] && opt['phantomjs-options'].length) {
-        childArgs.concat( opt['phantomjs-options'] );
+        childArgs.push( opt['phantomjs-options'] );
     }
+
+    childArgs.push(
+        path.normalize(runner),
+        (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
+    );
 
     var proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
         console.log('Testing ' + path.relative(__dirname, filepath));

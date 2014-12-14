@@ -4,7 +4,7 @@
   "description": "Run QUnit unit tests in a headless PhantomJS instance without using Grunt.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --reporter dot"
   },
   "repository": {
     "type": "git",
