@@ -27,6 +27,10 @@ module.exports = function (filepath, options, callback) {
         (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
     );
 
+    if ( opt.timeout ) {
+        childArgs.push( opt.timeout );
+    }
+
     var proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
         console.log('Testing ' + path.relative(__dirname, filepath));
 
