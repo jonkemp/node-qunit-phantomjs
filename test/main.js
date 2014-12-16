@@ -11,7 +11,7 @@ describe('node-qunit-phantomjs', function () {
     it('tests should pass', function (cb) {
         this.timeout(5000);
 
-        qunit('test/fixture.html');
+        qunit('test/fixtures/passing.html');
 
         process.stdout.write = function (str) {
             //out(str);
@@ -27,7 +27,7 @@ describe('node-qunit-phantomjs', function () {
     it('tests should pass with options', function (cb) {
         this.timeout(5000);
 
-        qunit('test/fixture.html', {'phantomjs-options': ['--ssl-protocol=any']});
+        qunit('test/fixtures/passing.html', {'phantomjs-options': ['--ssl-protocol=any']});
 
         process.stdout.write = function (str) {
             //out(str);
@@ -43,7 +43,7 @@ describe('node-qunit-phantomjs', function () {
     it('tests should not run when passing --help to PhantomJS', function(cb) {
         this.timeout(5000);
 
-        qunit('test/fixture.html', {'phantomjs-options': ['--help']});
+        qunit('test/fixtures/passing.html', {'phantomjs-options': ['--help']});
 
         process.stdout.write = function (str) {
             //out(str);
@@ -63,6 +63,22 @@ describe('node-qunit-phantomjs', function () {
                     process.stdout.write = out;
                     cb();
                 }
+            }
+        };
+    });
+
+    it('tests should time out', function (cb) {
+        this.timeout(10000);
+
+        qunit('test/fixtures/async.html', { 'timeout': 1 });
+
+        process.stdout.write = function (str) {
+            //out(str);
+
+            if (/The specified timeout of 1 seconds has expired. Aborting.../.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                cb();
             }
         };
     });
