@@ -76,6 +76,13 @@ Default: `None`
 
 These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
 
+#### options.timeout
+
+Type: `Number`  
+Default: `5`
+
+Pass a number or string value to override the default timeout of 5 seconds.
+
 ## License
 
 MIT © [Jonathan Kemp](http://jonkemp.com)
