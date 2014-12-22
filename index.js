@@ -24,7 +24,7 @@ module.exports = function (filepath, options, callback) {
 
     childArgs.push(
         path.join(__dirname, runner),
-        (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : file.path)
+        (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
     );
 
     if ( opt.timeout ) {
