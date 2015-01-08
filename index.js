@@ -38,13 +38,19 @@ module.exports = function (filepath, options, callback) {
         if (stdout) {
             try {
                 var out,
-                    result;
+                    result,
+                    message,
+                    output;
 
                 if (stdout.indexOf('{') !== -1) {
                     out = JSON.parse(stdout.trim());
                     result = out.result;
 
-                    console.log('Took ' + result.runtime + ' ms to run ' + chalk.blue(result.total) + ' tests. ' + chalk.green(result.passed) + ' passed, ' + chalk.red(result.failed) + ' failed.');
+                    message = 'Took ' + result.runtime + ' ms to run ' + result.total + ' tests. ' + result.passed + ' passed, ' + result.failed + ' failed.';
+
+                    output = result.failed > 0 ? chalk.red(message) : chalk.green(message);
+
+                    console.log(output);
 
                     if(out.exceptions) {
                         for(var test in out.exceptions) {
