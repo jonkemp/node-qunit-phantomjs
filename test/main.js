@@ -4,17 +4,19 @@
 'use strict';
 
 var assert = require('assert'),
+    chalk = require('chalk'),
     qunit = require('../index'),
     out = process.stdout.write.bind(process.stdout);
 
 describe('node-qunit-phantomjs', function () {
-    it('tests should pass', function (cb) {
-        this.timeout(5000);
+    this.timeout(5000);
 
+    it('tests should pass', function (cb) {
         qunit('test/fixtures/passing.html');
 
         process.stdout.write = function (str) {
             //out(str);
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -25,12 +27,11 @@ describe('node-qunit-phantomjs', function () {
     });
 
     it('tests should pass with options', function (cb) {
-        this.timeout(5000);
-
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--ssl-protocol=any']});
 
         process.stdout.write = function (str) {
             //out(str);
+            str = chalk.stripColor(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -41,8 +42,6 @@ describe('node-qunit-phantomjs', function () {
     });
 
     it('tests should not run when passing --help to PhantomJS', function(cb) {
-        this.timeout(5000);
-
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--help']});
 
         process.stdout.write = function (str) {

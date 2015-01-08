@@ -1,4 +1,4 @@
-# node-qunit-phantomjs [![Build Status](https://travis-ci.org/jonkemp/node-qunit-phantomjs.png?branch=master)](https://travis-ci.org/jonkemp/node-qunit-phantomjs)
+# node-qunit-phantomjs [![Build Status](https://travis-ci.org/jonkemp/node-qunit-phantomjs.svg?branch=master)](https://travis-ci.org/jonkemp/node-qunit-phantomjs)
 
 > Run QUnit unit tests in a headless PhantomJS instance without using Grunt.
 
