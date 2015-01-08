@@ -21,11 +21,11 @@ gulp.task('test', function() {
 });
 
 gulp.task('qunit', function() {
-    qunit('./test/fixture.html');
+    qunit('./test/fixtures/passing.html');
 });
 
 gulp.task('qunit-verbose', function() {
-    qunit('./test/fixture.html', { 'verbose': true });
+    qunit('./test/fixtures/passing.html', { 'verbose': true });
 });
 
 gulp.task('watch', function () {
