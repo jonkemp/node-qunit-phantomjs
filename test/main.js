@@ -26,6 +26,21 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
+    it('tests should not be affected by console.log in test code', function(cb) {
+        qunit('test/fixtures/console-log.html');
+
+        process.stdout.write = function (str) {
+            //out(str);
+            str = chalk.stripColor(str);
+
+            if (/10 passed. 0 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                cb();
+            }
+        };
+    });
+
     it('tests should pass with options', function (cb) {
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--ssl-protocol=any']});
 
@@ -59,7 +74,7 @@ describe('node-qunit-phantomjs', function () {
                 var line = lines[i];
                 if (/.*--help.*Shows this message and quits/.test(line)) {
                     assert(true);
-                    process.stdout.write = out;
+                    //process.stdout.write = out;
                     cb();
                 }
             }

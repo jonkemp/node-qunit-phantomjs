@@ -42,25 +42,27 @@ module.exports = function (filepath, options, callback) {
                     message,
                     output;
 
-                if (stdout.indexOf('{') !== -1) {
-                    out = JSON.parse(stdout.trim());
-                    result = out.result;
+                stdout.trim().split('\n').forEach(function(line) {
+                    if (line.indexOf('{') !== -1) {
+                        out = JSON.parse(line.trim());
+                        result = out.result;
 
-                    message = 'Took ' + result.runtime + ' ms to run ' + result.total + ' tests. ' + result.passed + ' passed, ' + result.failed + ' failed.';
+                        message = 'Took ' + result.runtime + ' ms to run ' + result.total + ' tests. ' + result.passed + ' passed, ' + result.failed + ' failed.';
 
-                    output = result.failed > 0 ? chalk.red(message) : chalk.green(message);
+                        output = result.failed > 0 ? chalk.red(message) : chalk.green(message);
 
-                    console.log(output);
+                        console.log(output);
 
-                    if(out.exceptions) {
-                        for(var test in out.exceptions) {
-                            console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                        if(out.exceptions) {
+                            for(var test in out.exceptions) {
+                                console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
+                            }
                         }
+                    } else {
+                        line = line.trim(); // Trim trailing cr-lf
+                        console.log(line);
                     }
-                } else {
-                    stdout = stdout.trim(); // Trim trailing cr-lf
-                    console.log(stdout);
-                }
+                });
             } catch (e) {
                 this.emit('error', new Error(e));
             }

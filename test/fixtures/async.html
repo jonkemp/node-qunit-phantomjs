@@ -14,16 +14,16 @@
     <div id="qunit-fixture"></div>
 
     <script>
-      test('async', function() {
-        //expect(1);
+        test('async', function() {
+            //expect(1);
 
-        stop();
+            stop();
 
-        setTimeout(function() {
-          ok(true, 'This test should not complete before phantomjs times out.');
-          start();
-        }, 6000 );
-      });
+            setTimeout(function() {
+                ok(true, 'This test should not complete before phantomjs times out.');
+                start();
+            }, 6000 );
+        });
     </script>
 </body>
 </html>
