@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/jonkemp/node-qunit-phantomjs",
   "dependencies": {
-    "chalk": "^0.5.1",
+    "chalk": "^1.0.0",
     "minimist": "^1.1.0",
     "phantomjs": "^1.9.12",
     "qunit-phantomjs-runner": "^2.1.0"
