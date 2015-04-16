@@ -43,7 +43,7 @@ module.exports = function (filepath, options, callback) {
                     output;
 
                 stdout.trim().split('\n').forEach(function(line) {
-                    if (line.indexOf('{') !== -1) {
+                    try{
                         out = JSON.parse(line.trim());
                         result = out.result;
 
@@ -58,7 +58,7 @@ module.exports = function (filepath, options, callback) {
                                 console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
                             }
                         }
-                    } else {
+                    } catch(e) {
                         line = line.trim(); // Trim trailing cr-lf
                         console.log(line);
                     }
