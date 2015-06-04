@@ -1,6 +1,6 @@
 {
   "name": "node-qunit-phantomjs",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Run QUnit unit tests in a headless PhantomJS instance without using Grunt.",
   "main": "index.js",
   "scripts": {
