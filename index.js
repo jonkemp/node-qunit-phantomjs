@@ -4,15 +4,16 @@ var path = require('path'),
     chalk = require('chalk'),
     childProcess = require('child_process'),
     phantomjs = require('phantomjs'),
-    binPath = phantomjs.path;
+    binPath = phantomjs.path,
+    phantomjsRunnerDir = path.dirname(require.resolve('qunit-phantomjs-runner'));
 
 module.exports = function (filepath, options, callback) {
     var opt = options || {},
         cb = callback || function () {},
-        runner = './node_modules/qunit-phantomjs-runner/runner-json.js';
+        runner = path.join(phantomjsRunnerDir, 'runner-json.js');
 
     if (opt.verbose) {
-        runner = './node_modules/qunit-phantomjs-runner/runner-list.js';
+        runner = path.join(phantomjsRunnerDir, 'runner-list.js');
     }
 
     var absolutePath = path.resolve(filepath),
@@ -24,7 +25,7 @@ module.exports = function (filepath, options, callback) {
     }
 
     childArgs.push(
-        path.join(__dirname, runner),
+        runner,
         (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
     );
 
