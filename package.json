@@ -29,7 +29,8 @@
     "qunit-phantomjs-runner": "^2.1.0"
   },
   "devDependencies": {
-    "gulp": "^3.8.9",
+    "gulp": "^3.9.0",
+    "gulp-jscs": "^3.0.0",
     "gulp-jshint": "^1.8.6",
     "gulp-mocha": "^2.0.0",
     "mocha": "*",

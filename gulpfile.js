@@ -3,7 +3,8 @@
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     mocha = require('gulp-mocha'),
-    qunit = require('./index');
+    qunit = require('./index'),
+    jscs = require('gulp-jscs');
 
 var paths = {
     scripts: ['./*.js', './test/*.js', '!./lib', '!./gulpfile.js']
@@ -13,6 +14,11 @@ gulp.task('lint', function() {
     return gulp.src(paths.scripts)
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
+});
+
+gulp.task('jscs', function () {
+    return gulp.src(paths.scripts)
+        .pipe(jscs());
 });
 
 gulp.task('test', function() {
@@ -29,7 +35,7 @@ gulp.task('qunit-verbose', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.scripts, ['lint', 'test']);
+    gulp.watch(paths.scripts, ['lint', 'jscs', 'test']);
 });
 
-gulp.task('default', ['lint', 'test', 'watch']);
+gulp.task('default', ['lint', 'jscs', 'test', 'watch']);
