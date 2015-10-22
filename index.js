@@ -14,6 +14,10 @@ module.exports = function (filepath, options, callback) {
 
     if (opt.verbose) {
         runner = path.join(phantomjsRunnerDir, 'runner-list.js');
+    } else if (opt.customRunner) {
+        // A custom phantomjs runner can be used to have more control
+        // over phantomjs configuration or to customize phantomjs hooks.
+        runner = opt.customRunner;
     }
 
     var absolutePath = path.resolve(filepath),
