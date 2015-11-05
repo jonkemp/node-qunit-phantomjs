@@ -83,6 +83,14 @@ Default: `5`
 
 Pass a number or string value to override the default timeout of 5 seconds.
 
+
+#### options.customRunner
+
+Type: `String`
+Default: `None`
+
+A path to a custom PhantomJS runner script. A custom runner can be used to have more control over PhantomJS (configuration, hooks, etc.). Default runner implementations are provided by the [PhantomJS Runner QUnit Plugin](https://github.com/jonkemp/qunit-phantomjs-runner).
+
 ## License
 
 MIT © [Jonathan Kemp](http://jonkemp.com)
