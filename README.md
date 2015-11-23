@@ -1,5 +1,7 @@
 # node-qunit-phantomjs [![Build Status](https://travis-ci.org/jonkemp/node-qunit-phantomjs.svg?branch=master)](https://travis-ci.org/jonkemp/node-qunit-phantomjs)
 
+[![NPM](https://nodei.co/npm/node-qunit-phantomjs.png?downloads=true)](https://nodei.co/npm/node-qunit-phantomjs/)
+
 > Run QUnit unit tests in a headless PhantomJS instance without using Grunt.
 
 Run QUnit unit tests in a PhantomJS-powered headless test runner, providing basic console output for QUnit tests. Uses the [phantomjs](https://github.com/Obvious/phantomjs) node module and the [PhantomJS Runner QUnit Plugin](https://github.com/jonkemp/qunit-phantomjs-runner).
