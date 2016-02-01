@@ -3,7 +3,7 @@
 var path = require('path'),
     chalk = require('chalk'),
     childProcess = require('child_process'),
-    phantomjs = require('phantomjs'),
+    phantomjs = require('phantomjs-prebuilt'),
     binPath = phantomjs.path,
     phantomjsRunnerDir = path.dirname(require.resolve('qunit-phantomjs-runner'));
 
