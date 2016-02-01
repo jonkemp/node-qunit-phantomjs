@@ -1,29 +1,23 @@
 'use strict';
 
 var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
+    eslint = require('gulp-eslint'),
     mocha = require('gulp-mocha'),
-    qunit = require('./index'),
-    jscs = require('gulp-jscs');
+    qunit = require('./index');
 
 var paths = {
-    scripts: ['./*.js', './test/*.js', '!./lib', '!./gulpfile.js']
+    scripts: ['./*.js', '!./gulpfile.js']
 };
 
 gulp.task('lint', function() {
     return gulp.src(paths.scripts)
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
-});
-
-gulp.task('jscs', function () {
-    return gulp.src(paths.scripts)
-        .pipe(jscs());
+        .pipe(eslint())
+        .pipe(eslint.format());
 });
 
 gulp.task('test', function() {
     return gulp.src('./test/*.js')
-        .pipe(mocha({reporter: 'spec'}));
+        .pipe(mocha());
 });
 
 gulp.task('qunit', function() {
