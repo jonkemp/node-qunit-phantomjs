@@ -47,8 +47,8 @@ module.exports = function (filepath, options, callback) {
                     message,
                     output;
 
-                stdout.trim().split('\n').forEach(function(line) {
-                    try{
+                stdout.trim().split('\n').forEach(function (line) {
+                    try {
                         out = JSON.parse(line.trim());
                         result = out.result;
 
@@ -58,12 +58,12 @@ module.exports = function (filepath, options, callback) {
 
                         console.log(output);
 
-                        if(out.exceptions) {
-                            for(var test in out.exceptions) {
+                        if (out.exceptions) {
+                            for (var test in out.exceptions) {
                                 console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
                             }
                         }
-                    } catch(e) {
+                    } catch (e) {
                         line = line.trim(); // Trim trailing cr-lf
                         console.log(line);
                     }
