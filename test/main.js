@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-disable */
 /* global describe, it */
 
 'use strict';
@@ -22,6 +22,21 @@ describe('node-qunit-phantomjs', function () {
                 assert(true);
                 process.stdout.write = out;
                 cb();
+            }
+        };
+    });
+
+    it('tests should fail', function(done) {
+        qunit('test/fixtures/failing.html');
+
+        process.stdout.write = function (str) {
+            //out(str);
+            str = chalk.stripColor(str);
+
+            if (/10 passed. 1 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                done();
             }
         };
     });
