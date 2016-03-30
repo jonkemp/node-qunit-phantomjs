@@ -33,6 +33,11 @@ With options:
 ```bash
 $ node-qunit-phantomjs ./test/fixture.html --verbose
 ```
+Example setting the viewport size:
+
+```bash
+$ node-qunit-phantomjs ./test/fixture.html 5 '{"viewportSize":{"width":1000,"height":1000}}'
+```
 
 Or require it as a module:
 ```js
@@ -46,6 +51,15 @@ Verbose option to output list as test cases pass or fail:
 var qunit = require('node-qunit-phantomjs');
 
 qunit('./test/fixture.html', { 'verbose': true });
+```
+
+Page option example to set the viewport size::
+```js
+var qunit = require('node-qunit-phantomjs');
+
+qunit('./test/fixture.html', {'page': {
+    viewportSize: { width: 1280, height: 800 }
+}});
 ```
 
 Sample [gulp](https://github.com/gulpjs/gulp) task:
@@ -77,6 +91,13 @@ Type: `Array`
 Default: `None`
 
 These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/api/command-line.html) for more information.
+
+#### options.page
+
+Type: `Object`  
+Default: `None`
+
+These options are passed on to PhantomJS. See the [PhantomJS documentation](http://phantomjs.org/page-automation.html) for more information.
 
 #### options.timeout
 

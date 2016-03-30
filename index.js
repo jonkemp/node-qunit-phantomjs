@@ -37,6 +37,15 @@ module.exports = function (filepath, options, callback) {
         childArgs.push(opt.timeout);
     }
 
+    if (opt.page) {
+        // Push default timeout value unless specified otherwise
+        if (!opt.timeout) {
+            childArgs.push(5);
+        }
+
+        childArgs.push(JSON.stringify(opt.page));
+    }
+
     proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
         var out,
             result,

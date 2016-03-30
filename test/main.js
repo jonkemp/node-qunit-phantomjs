@@ -71,6 +71,23 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
+    it('should set custom viewport', function (done) {
+        qunit('test/fixtures/custom-viewport.html', {'page': {
+            viewportSize: { width: 1280, height: 800 }
+        }});
+
+        process.stdout.write = function (str) {
+            //out(str);
+            str = chalk.stripColor(str);
+
+            if (/2 passed. 0 failed./.test(str)) {
+                assert(true);
+                process.stdout.write = out;
+                done();
+            }
+        };
+    });
+
     it('tests should not run when passing --help to PhantomJS', function(cb) {
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--help']});
 
