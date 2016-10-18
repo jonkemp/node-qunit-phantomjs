@@ -10,6 +10,9 @@ var options = {};
 if (argv.verbose) {
     options.verbose = true;
 }
+if (argv.timeout) {
+    options.timeout = +argv.timeout;
+}
 
 require(path.join(dir, 'index.js'))(argv._[0], options, function (code) {
     process.exit(code);
