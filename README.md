@@ -32,6 +32,10 @@ $ node-qunit-phantomjs ./test/fixture.html
 With options:
 ```bash
 $ node-qunit-phantomjs ./test/fixture.html --verbose
+
+$ node-qunit-phantomjs ./test/fixtures/passing.html --timeout=5
+
+$ node-qunit-phantomjs ./test/fixtures/passing.html --timeout 5
 ```
 Example setting the viewport size:
 
