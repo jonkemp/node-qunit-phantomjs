@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
 'use strict';
-var path = require('path');
-var fs = require('fs');
-var dir = path.join(path.dirname(fs.realpathSync(__filename)), '..');
-var argv = require('minimist')(process.argv.slice(2));
-var options = {};
+var path = require('path'),
+    fs = require('fs'),
+    dir = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
+    argv = require('minimist')(process.argv.slice(2)),
+    options = {};
 
 if (argv.verbose) {
     options.verbose = true;
 }
 if (argv.timeout) {
-    options.timeout = +argv.timeout;
+    options.timeout = Number(argv.timeout);
 }
 
 require(path.join(dir, 'index.js'))(argv._[0], options, function (code) {
