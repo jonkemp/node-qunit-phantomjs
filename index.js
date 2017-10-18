@@ -25,7 +25,7 @@ module.exports = function (filepath, options, callback) {
     }
 
     if (opt['phantomjs-options'] && opt['phantomjs-options'].length) {
-        childArgs.push(opt['phantomjs-options']);
+        childArgs = childArgs.concat(opt['phantomjs-options']);
     }
 
     childArgs.push(
