@@ -4,7 +4,7 @@
 'use strict';
 
 var assert = require('assert'),
-    chalk = require('chalk'),
+    stripAnsi = require('strip-ansi'),
     qunit = require('../index'),
     out = process.stdout.write.bind(process.stdout);
 
@@ -16,7 +16,7 @@ describe('node-qunit-phantomjs', function () {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -31,7 +31,7 @@ describe('node-qunit-phantomjs', function () {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 1 failed./.test(str)) {
                 assert(true);
@@ -46,7 +46,7 @@ describe('node-qunit-phantomjs', function () {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -61,7 +61,7 @@ describe('node-qunit-phantomjs', function () {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/10 passed. 0 failed./.test(str)) {
                 assert(true);
@@ -78,7 +78,7 @@ describe('node-qunit-phantomjs', function () {
 
         process.stdout.write = function (str) {
             //out(str);
-            str = chalk.stripColor(str);
+            str = stripAnsi(str);
 
             if (/2 passed. 0 failed./.test(str)) {
                 assert(true);
