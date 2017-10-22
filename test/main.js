@@ -9,7 +9,7 @@ var assert = require('assert'),
     out = process.stdout.write.bind(process.stdout);
 
 describe('node-qunit-phantomjs', function () {
-    this.timeout(5000);
+    this.timeout(10000);
 
     it('tests should pass', function (cb) {
         qunit('test/fixtures/passing.html');
