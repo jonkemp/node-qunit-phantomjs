@@ -5,13 +5,21 @@ var path = require('path'),
     fs = require('fs'),
     dir = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
     argv = require('minimist')(process.argv.slice(2)),
-    options = {};
+    options = {
+        'phantomjs-options': [],
+    };
 
-if (argv.verbose) {
-    options.verbose = true;
-}
-if (argv.timeout) {
-    options.timeout = Number(argv.timeout);
+var argKeys = Object.keys(argv);
+
+for (var i = 0; i < argKeys.length; i++) {
+    var key = argKeys[i];
+    if (key === 'verbose' && argv.verbose) {
+        options.verbose = true;
+    } else if (key === 'timeout') {
+        options.timeout = Number(argv.timeout);
+    } else if (key !== '_') {
+        options['phantomjs-options'].push('--' + key + '=' + argv[key]);
+    }
 }
 
 require(path.join(dir, 'index.js'))(argv._[0], options, function (code) {
