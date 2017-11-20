@@ -17,6 +17,8 @@ for (var i = 0; i < argKeys.length; i++) {
         options.verbose = true;
     } else if (key === 'timeout') {
         options.timeout = Number(argv.timeout);
+    } else if (key === 'page') {
+        options.page = JSON.parse(argv.page);
     } else if (key !== '_') {
         options['phantomjs-options'].push('--' + key + '=' + argv[key]);
     }
