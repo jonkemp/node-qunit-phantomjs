@@ -121,7 +121,7 @@ describe('node-qunit-phantomjs', function () {
                 var line = lines[i];
                 if (/.*--help.*Shows this message and quits/.test(line)) {
                     assert(true);
-                    //process.stdout.write = out;
+                    process.stdout.write = out;
                     cb();
                 }
             }
@@ -129,7 +129,6 @@ describe('node-qunit-phantomjs', function () {
     });
 
     it('tests should time out', function (cb) {
-        this.timeout(10000);
 
         qunit('test/fixtures/async.html', { 'timeout': 1 });
 

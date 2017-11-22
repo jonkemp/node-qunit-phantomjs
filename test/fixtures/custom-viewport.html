@@ -14,10 +14,10 @@
     <div id="qunit-fixture"></div>
 
     <script>
-      test('viewport', function() {
-          ok(true, 'This is true');
-          ok(window.innerWidth === 1280, 'Window is 1280px wide');
-      });
+        QUnit.test('viewport', function(assert) {
+            assert.ok(true, 'This is true');
+            assert.ok(window.innerWidth === 1280, 'Window is 1280px wide');
+        });
     </script>
 </body>
 </html>
