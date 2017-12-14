@@ -5,96 +5,104 @@ var path = require('path'),
     childProcess = require('child_process'),
     phantomjs = require('phantomjs-prebuilt'),
     binPath = phantomjs.path,
-    phantomjsRunnerDir = path.dirname(require.resolve('qunit-phantomjs-runner'));
-
-module.exports = function (filepath, options, callback) {
-    var opt = options || {},
-        cb = callback || function () {},
-        runner = path.join(phantomjsRunnerDir, 'runner-json.js'),
-        absolutePath = path.resolve(filepath),
-        isAbsolutePath = absolutePath.indexOf(filepath) >= 0,
-        childArgs = [],
-        proc;
-
-    if (opt.verbose) {
-        runner = path.join(phantomjsRunnerDir, 'runner-list.js');
-    } else if (opt.customRunner) {
-        // A custom phantomjs runner can be used to have more control
-        // over phantomjs configuration or to customize phantomjs hooks.
-        runner = opt.customRunner;
-    }
-
-    if (opt['phantomjs-options'] && opt['phantomjs-options'].length) {
-        if (Array.isArray(opt['phantomjs-options'])) {
-            childArgs = childArgs.concat(opt['phantomjs-options']);
-        } else {
-            childArgs.push(opt['phantomjs-options']);
+    phantomjsRunnerDir = path.dirname(require.resolve('qunit-phantomjs-runner')),
+    isUrl = function (uri) {
+        return uri.match(/^http(s?):/) !== null;
+    },
+    getUri = function (uri) {
+        return isUrl(uri) ? uri : 'file:///' + path.resolve(uri).replace(/\\/g, '/');
+    },
+    getRunner = function (options) {
+        if (options.verbose) {
+            return path.join(phantomjsRunnerDir, 'runner-list.js');
         }
-    }
-
-    childArgs.push(
-        runner,
-        (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
-    );
-
-    if (opt.timeout) {
-        childArgs.push(opt.timeout);
-    }
-
-    if (opt.page) {
-        // Push default timeout value unless specified otherwise
-        if (!opt.timeout) {
-            childArgs.push(5);
+        if (options.customRunner) {
+            // A custom phantomjs runner can be used to have more control
+            // over phantomjs configuration or to customize phantomjs hooks.
+            return options.customRunner;
         }
+        return path.join(phantomjsRunnerDir, 'runner-json.js');
+    },
+    getArgs = function (options, runner, testUri) {
+        var args = [];
 
-        childArgs.push(JSON.stringify(opt.page));
-    }
-
-    proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
-        var out,
-            result,
-            message,
-            output;
-
-        console.log('Testing ' + chalk.blue(path.relative(__dirname, filepath)));
-
-        if (stdout) {
-            try {
-                stdout.trim().split('\n').forEach(function (line) {
-                    var test;
-
-                    try {
-                        out = JSON.parse(line.trim());
-                        result = out.result;
-
-                        message = 'Took ' + result.runtime + ' ms to run ' + result.total + ' tests. ' + result.passed + ' passed, ' + result.failed + ' failed.';
-
-                        output = result.failed > 0 ? chalk.red(message) : chalk.green(message);
-
-                        console.log(output);
-
-                        if (out.exceptions) {
-                            for (test in out.exceptions) {
-                                console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
-                            }
-                        }
-                    } catch (e) {
-                        console.log(line.trim());
-                    }
-                });
-            } catch (e) {
-                this.emit('error', new Error(e));
+        if (options['phantomjs-options'] && options['phantomjs-options'].length) {
+            if (Array.isArray(options['phantomjs-options'])) {
+                args = args.concat(options['phantomjs-options']);
+            } else {
+                args.push(options['phantomjs-options']);
             }
         }
 
-        if (stderr) {
-            console.log(stderr);
+        args.push(
+            runner,
+            testUri
+        );
+
+        if (options.timeout) {
+            args.push(options.timeout);
         }
 
-        if (err) {
-            console.log(err);
+        if (options.page) {
+            // Push default timeout value unless specified otherwise
+            if (!options.timeout) {
+                args.push(5);
+            }
+
+            args.push(JSON.stringify(options.page));
         }
-    }.bind(this));
+        return args;
+    },
+    parseLine = function (line) {
+        try {
+            return JSON.parse(line);
+        } catch (err) {
+            return { message: line };
+        }
+    },
+    logTestResult = function (result) {
+        var message = 'Took ' + result.runtime + ' ms to run ' + result.total + ' tests. ' + result.passed + ' passed, ' + result.failed + ' failed.';
+
+        console.log(result.failed > 0 ? chalk.red(message) : chalk.green(message));
+    },
+    logTestFailures = function (failures) {
+        var test;
+
+        for (test in failures) {
+            console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + failures[test].join('\n  '));
+        }
+    };
+
+module.exports = function (uri, options, callback) {
+    var cb = callback || function () {},
+        opt = options || {},
+        runner = getRunner(opt),
+        testUri = getUri(uri.trim()),
+        childArgs = getArgs(opt, runner, testUri),
+        proc;
+
+    console.log('Testing: ' + chalk.blue(testUri));
+
+    // phantomjs [options] runner.js [arg1 [arg2 [...]]]
+    proc = childProcess.spawn(binPath, childArgs);
+
+    proc.stdout.on('data', function (data) {
+        var line = parseLine(data.toString().trim());
+
+        if (line.message) {
+            console.log(line.message);
+        }
+        if (line.exceptions) {
+            logTestFailures(line.exceptions);
+        }
+        if (line.result) {
+            logTestResult(line.result);
+        }
+    });
+
+    proc.stderr.on('data', function (data) {
+        console.log(data.toString().trim());
+    });
 
     proc.on('close', function (code) {
         return cb(code);
