@@ -19,6 +19,8 @@ for (var i = 0; i < argKeys.length; i++) {
         options.timeout = Number(argv.timeout);
     } else if (key === 'page') {
         options.page = JSON.parse(argv.page);
+    } else if (key === 'custom-runner') {
+        options.customRunner = argv['custom-runner']
     } else if (key !== '_') {
         options['phantomjs-options'].push('--' + key + '=' + argv[key]);
     }
