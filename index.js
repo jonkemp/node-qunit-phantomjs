@@ -5,14 +5,16 @@ var path = require('path'),
     childProcess = require('child_process'),
     phantomjs = require('phantomjs-prebuilt'),
     binPath = phantomjs.path,
-    phantomjsRunnerDir = path.dirname(require.resolve('qunit-phantomjs-runner'));
+    phantomjsRunnerDir = path.dirname(require.resolve('qunit-phantomjs-runner')),
+    isUrl = function (uri) {
+        return uri.match(/^http(s?):/) !== null;
+    };
 
-module.exports = function (filepath, options, callback) {
+module.exports = function (uri, options, callback) {
     var opt = options || {},
         cb = callback || function () {},
         runner = path.join(phantomjsRunnerDir, 'runner-json.js'),
-        absolutePath = path.resolve(filepath),
-        isAbsolutePath = absolutePath.indexOf(filepath) >= 0,
+        testUri = isUrl(uri) ? uri : 'file:///' + path.resolve(uri).replace(/\\/g, '/'),
         childArgs = [],
         proc;
 
@@ -34,7 +36,7 @@ module.exports = function (filepath, options, callback) {
 
     childArgs.push(
         runner,
-        (isAbsolutePath ? 'file:///' + absolutePath.replace(/\\/g, '/') : filepath)
+        testUri
     );
 
     if (opt.timeout) {
@@ -50,51 +52,40 @@ module.exports = function (filepath, options, callback) {
         childArgs.push(JSON.stringify(opt.page));
     }
 
-    proc = childProcess.execFile(binPath, childArgs, function (err, stdout, stderr) {
+    console.log('Testing ' + chalk.blue(testUri));
+
+    // phantomjs [phantomjs-options] runner testuri [timeout [page]]
+    proc = childProcess.spawn(binPath, childArgs);
+
+    proc.stdout.on('data', function (data) {
         var out,
-            result,
+            test,
             message,
-            output;
+            line = data.toString().trim();
 
-        console.log('Testing ' + chalk.blue(path.relative(__dirname, filepath)));
+        try {
+            out = JSON.parse(line);
+        } catch (err) {
+            console.log(line);
+            return;
+        }
 
-        if (stdout) {
-            try {
-                stdout.trim().split('\n').forEach(function (line) {
-                    var test;
-
-                    try {
-                        out = JSON.parse(line.trim());
-                        result = out.result;
-
-                        message = 'Took ' + result.runtime + ' ms to run ' + result.total + ' tests. ' + result.passed + ' passed, ' + result.failed + ' failed.';
-
-                        output = result.failed > 0 ? chalk.red(message) : chalk.green(message);
-
-                        console.log(output);
-
-                        if (out.exceptions) {
-                            for (test in out.exceptions) {
-                                console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
-                            }
-                        }
-                    } catch (e) {
-                        console.log(line.trim());
-                    }
-                });
-            } catch (e) {
-                this.emit('error', new Error(e));
+        if (out.exceptions) {
+            for (test in out.exceptions) {
+                console.log('\n' + chalk.red('Test failed') + ': ' + chalk.red(test) + ': \n' + out.exceptions[test].join('\n  '));
             }
         }
 
-        if (stderr) {
-            console.log(stderr);
-        }
+        if (out.result) {
+            message = 'Took ' + out.result.runtime + ' ms to run ' + out.result.total + ' tests. ' + out.result.passed + ' passed, ' + out.result.failed + ' failed.';
 
-        if (err) {
-            console.log(err);
+            console.log(out.result.failed > 0 ? chalk.red(message) : chalk.green(message));
         }
-    }.bind(this));
+    });
+
+    proc.stderr.on('data', function (data) {
+        console.log(data.toString().trim());
+    });
 
     proc.on('close', function (code) {
         return cb(code);
