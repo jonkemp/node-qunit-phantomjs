@@ -21,8 +21,12 @@ gulp.task('test', function() {
         .pipe(mocha());
 });
 
-gulp.task('qunit', function() {
+gulp.task('qunit:pass', function() {
     qunit('./test/fixtures/passing.html');
+});
+
+gulp.task('qunit:fail', function() {
+    qunit('./test/fixtures/failing.html');
 });
 
 gulp.task('qunit-verbose', function() {
