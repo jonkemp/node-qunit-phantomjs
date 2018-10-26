@@ -33,7 +33,7 @@
     "gulp-eslint": "^5.0.0",
     "gulp-mocha": "^6.0.0",
     "mocha": "*",
-    "qunitjs": "^2.4.1",
+    "qunit": "^2.7.1",
     "strip-ansi": "^5.0.0"
   },
   "bin": {
