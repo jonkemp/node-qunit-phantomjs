@@ -33,7 +33,7 @@ gulp.task('qunit-verbose', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(paths.scripts, gulp.parallel('lint', 'jscs', 'test'));
+    gulp.watch(paths.scripts, gulp.parallel('lint', 'test'));
 });
 
-gulp.task('default', gulp.parallel('lint', 'jscs', 'test', 'watch'));
+gulp.task('default', gulp.parallel('lint', 'test', 'watch'));
