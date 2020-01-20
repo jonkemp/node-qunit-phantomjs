@@ -1,20 +1,18 @@
 /* eslint-disable */
 /* global describe, it */
 
-'use strict';
-
-var assert = require('assert'),
-    stripAnsi = require('strip-ansi'),
-    qunit = require('../index'),
-    out = process.stdout.write.bind(process.stdout);
+const assert = require('assert');
+const stripAnsi = require('strip-ansi');
+const qunit = require('../index');
+const out = process.stdout.write.bind(process.stdout);
 
 describe('node-qunit-phantomjs', function () {
     this.timeout(10000);
 
-    it('tests should pass', function (cb) {
+    it('tests should pass', cb => {
         qunit('test/fixtures/passing.html');
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
             str = stripAnsi(str);
 
@@ -26,10 +24,10 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('tests should fail', function(done) {
+    it('tests should fail', done => {
         qunit('test/fixtures/failing.html');
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
             str = stripAnsi(str);
 
@@ -41,10 +39,10 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('tests should not be affected by console.log in test code', function(cb) {
+    it('tests should not be affected by console.log in test code', cb => {
         qunit('test/fixtures/console-log.html');
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
             str = stripAnsi(str);
 
@@ -56,10 +54,10 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('tests should pass with options', function (cb) {
+    it('tests should pass with options', cb => {
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--ssl-protocol=any']});
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
             str = stripAnsi(str);
 
@@ -71,10 +69,10 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('tests should pass with more than one options', function(cb) {
+    it('tests should pass with more than one options', cb => {
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--ignore-ssl-errors=true', '--web-security=false']});
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
             str = stripAnsi(str);
 
@@ -86,12 +84,12 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('should set custom viewport', function (done) {
+    it('should set custom viewport', done => {
         qunit('test/fixtures/custom-viewport.html', {'page': {
             viewportSize: { width: 1280, height: 800 }
         }});
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
             str = stripAnsi(str);
 
@@ -103,10 +101,10 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('tests should not run when passing --help to PhantomJS', function(cb) {
+    it('tests should not run when passing --help to PhantomJS', cb => {
         qunit('test/fixtures/passing.html', {'phantomjs-options': ['--help']});
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
 
             if (/10 passed. 0 failed./.test(str)) {
@@ -116,9 +114,9 @@ describe('node-qunit-phantomjs', function () {
                 return;
             }
 
-            var lines = str.split('\n');
-            for (var i = 0; i < lines.length; i++) {
-                var line = lines[i];
+            const lines = str.split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
                 if (/.*--help.*Shows this message and quits/.test(line)) {
                     assert(true);
                     process.stdout.write = out;
@@ -128,11 +126,11 @@ describe('node-qunit-phantomjs', function () {
         };
     });
 
-    it('tests should time out', function (cb) {
+    it('tests should time out', cb => {
 
         qunit('test/fixtures/async.html', { 'timeout': 1 });
 
-        process.stdout.write = function (str) {
+        process.stdout.write = str => {
             //out(str);
 
             if (/The specified timeout of 1 seconds has expired. Aborting.../.test(str)) {

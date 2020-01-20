@@ -23,18 +23,19 @@
   },
   "homepage": "https://github.com/jonkemp/node-qunit-phantomjs",
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "minimist": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.16",
-    "qunit-phantomjs-runner": "^2.4.0"
+    "qunit-phantomjs-runner": "^2.4.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-mocha": "^7.0.2",
     "mocha": "*",
     "qunit": "^2.9.3",
-    "strip-ansi": "^5.2.0"
+    "strip-ansi": "^6.0.0"
   },
   "bin": {
     "node-qunit-phantomjs": "./bin/node-qunit-phantomjs"

@@ -1,38 +1,33 @@
 /* eslint-disable */
-'use strict';
+const gulp = require('gulp');
+const eslint = require('gulp-eslint');
+const mocha = require('gulp-mocha');
+const qunit = require('./index');
 
-var gulp = require('gulp'),
-    eslint = require('gulp-eslint'),
-    mocha = require('gulp-mocha'),
-    qunit = require('./index'),
-    paths = {
-        scripts: ['./*.js', '!./gulpfile.js']
-    };
+const paths = {
+    scripts: ['./*.js', '!./gulpfile.js']
+};
 
-gulp.task('lint', function () {
-    return gulp.src(paths.scripts)
-        .pipe(eslint())
-        .pipe(eslint.format());
-});
+gulp.task('lint', () => gulp.src(paths.scripts)
+    .pipe(eslint({fix: true}))
+    .pipe(eslint.format()));
 
-gulp.task('test', function () {
-    return gulp.src('./test/*.js')
-        .pipe(mocha());
-});
+gulp.task('test', () => gulp.src('./test/*.js')
+    .pipe(mocha()));
 
-gulp.task('qunit:pass', function () {
+gulp.task('qunit:pass', () => {
     qunit('./test/fixtures/passing.html');
 });
 
-gulp.task('qunit:fail', function () {
+gulp.task('qunit:fail', () => {
     qunit('./test/fixtures/failing.html');
 });
 
-gulp.task('qunit-verbose', function () {
+gulp.task('qunit-verbose', () => {
     qunit('./test/fixtures/passing.html', { 'verbose': true });
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', () => {
     gulp.watch(paths.scripts, gulp.parallel('lint', 'test'));
 });
 
